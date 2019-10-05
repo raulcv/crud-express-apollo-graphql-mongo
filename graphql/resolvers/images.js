@@ -32,7 +32,10 @@ module.exports = {
     Mutation: {
         async addImage(_, { title }, context) {
             const user = checkAuth(context);
-            console.log(user);
+            if(title.trim() === ''){
+                throw new Error('Debes postear una imagen/No puede estar vacio')
+            }
+            //console.log(user);
             const newImage = await Image({
                 title,
                 user: user.id,
