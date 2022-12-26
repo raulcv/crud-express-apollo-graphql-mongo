@@ -1,7 +1,11 @@
 
-const { AuthenticationError, UserInputError } = require('apollo-server-express');
+// const { AuthenticationError, UserInputError } = require('apollo-server-express');
+
+import { GraphQLError } from 'graphql';
 import { Image } from '../../models';
 const checkAuth = require('../../utils/check-auth');
+// import { PubSub } from 'graphql-subscriptions';
+// const pubsub = new PubSub();
 
 module.exports = {
     Query: {
@@ -21,7 +25,8 @@ module.exports = {
                 if (image) {
                     return image;
                 } else {
-                    throw new Error('Imagen no funciona');
+                    // throw new Error('Imagen no funciona');
+                    throw new GraphQLError('Imagen no funciona');
                 }
             } catch (err) {
                 throw new Error(err);
@@ -31,9 +36,12 @@ module.exports = {
 
     Mutation: {
         async addImage(_, { title }, context) {
+            console.log("context pussub: ", context.pubsub);
+            // console.log("context: request - headers - authorization");
+            // console.log(context.req.headers);
             const user = checkAuth(context);
             if(title.trim() === ''){
-                throw new Error('Debes postear una imagen/No puede estar vacio')
+                throw new GraphQLError('Debes postear una imagen/No puede estar vacio')
             }
             //console.log(user);
             const newImage = await Image({
@@ -46,6 +54,9 @@ module.exports = {
             context.pubsub.publish('NEW_IMAGE', {
                 newImage: image
             }); //Emitir una notificacion a mis suscriptores al postear una imagen
+            // pubsub.publish('NEW_IMAGE', {
+            //     newImage: image
+            // }); //Emitir una notificacion a mis suscriptores al postear una imagen
             return image;
         },
         async deleteImage(_, { imgId }, context) {
@@ -57,7 +68,8 @@ module.exports = {
                     await image.delete();
                     return 'Imagen eliminado correctamente';
                 } else {
-                    throw new AuthenticationError('Accion no permitido');
+                    // throw new AuthenticationError('Accion no permitido');
+                    throw new GraphQLError('Accion no permitido');
                 }
             } catch (err) {
                 throw new Error(err);
@@ -79,7 +91,8 @@ module.exports = {
                 await image.save();
                 return image;
             } else {//Si Imagen no existe
-                throw new UserInputError('Imagen no encontrado, Parece que fue eliminado');
+                // throw new UserInputError('Imagen no encontrado, Parece que fue eliminado');
+                throw new GraphQLError('Imagen no encontrado, Parece que fue eliminado');
             }
         }
     },

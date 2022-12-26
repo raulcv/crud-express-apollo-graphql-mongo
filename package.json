@@ -2,9 +2,9 @@
   "name": "merng",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node -- index.js"
+    "start": "nodemon --exec babel-node -- server.js"
   },
   "keywords": [],
   "author": "",
@@ -14,14 +14,21 @@
     "@babel/core": "^7.6.2",
     "@babel/node": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
-    "nodemon": "^1.19.3"
+    "nodemon": "^2.0.20"
   },
   "dependencies": {
-    "apollo-server-express": "^2.9.4",
+    "@apollo/server": "^4.3.0",
+    "@graphql-tools/schema": "^9.0.12",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
     "express": "^4.17.1",
-    "graphql": "^14.5.8",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.7.5"
+    "graphql": "^16.6.0",
+    "graphql-subscriptions": "^2.0.0",
+    "graphql-ws": "^5.11.2",
+    "json": "^11.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^5.7.5",
+    "ws": "^8.11.0"
   }
 }

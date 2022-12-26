@@ -2,8 +2,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User } = require('../../models');
 const { SECRET_KEY } = require('../../db/key');
-const { UserInputError } = require('apollo-server-express');
+// const { UserInputError } = require('apollo-server-express');
 const { validateRegisterInput, validateLoginInput } = require('../../utils/validators');
+const { GraphQLError } = require('graphql');
 
 function generateToken(user){
     return jwt.sign({
@@ -31,16 +32,17 @@ module.exports = {
             //Validation de datos del usuario
             const { valid, errors } = validateRegisterInput( username, email, pwd, confirmPwd );
             if(!valid){
-                throw new UserInputError('Errors', { errors });
+                throw new GraphQLError('Errors', { errors });
             }
             //Verificando que username no exista en BD
             const user = await User.findOne({ username });
             if (user) { //If user exist or if user is not null
-                throw new UserInputError('Nombre de usuario ya esta tomado', {
-                    errors: {
-                        username: 'Este usuario ya esta en uso'
-                    }
-                })
+                // throw new UserInputError('Nombre de usuario ya esta tomado', {
+                //     errors: {
+                //         username: 'Este usuario ya esta en uso'
+                //     }
+                // })
+                throw new GraphQLError('Nombre de usuario ya esta tomado')
             }
             //Hash pwd y autenticacion del usuario con token
             pwd = await bcrypt.hash(pwd, 12);
@@ -51,7 +53,7 @@ module.exports = {
                 createdat: new Date().toISOString()
             });
             const result = await newUser.save();
-            const token = generateToken(res);
+            const token = generateToken(result);
             //console.log(user);
             return {
                 ...result._doc,
@@ -63,18 +65,21 @@ module.exports = {
         async login(_, {username, pwd}){
             const {errors, valid} = validateLoginInput(username, pwd)
             if(!valid){
-                throw new UserInputError('Errors', {errors});
+                // throw new UserInputError('Errors', {errors});
+                throw new GraphQLError('Errors', {errors});
             }
 
             const user = await User.findOne({username});
             if(!user){
                 errors.general = 'Usuario no encontrado';
-                throw new UserInputError('Usuario no encontrado', {errors});
+                // throw new UserInputError('Usuario no encontrado', {errors});
+                throw new GraphQLError('Usuario no encontrado', {errors});
             }
             const match = await bcrypt.compare(pwd, user.pwd);
             if(!match){
                 errors.general = 'Credenciales incorrectos';
-                throw new UserInputError('Credenciales incorrectos', {errors});
+                // throw new UserInputError('Credenciales incorrectos', {errors});
+                throw new GraphQLError('Credenciales incorrectos', {errors});
             }
             const token = generateToken(user);
             //console.log(user);

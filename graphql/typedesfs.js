@@ -1,6 +1,6 @@
-import { gql } from "apollo-server-express";
+// import { gql } from "apollo-server-express";
 
-module.exports = gql`
+module.exports = `
     type Image {
         id: ID!
         title: String!
