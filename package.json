@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "graphql": "^16.6.0",
     "graphql-subscriptions": "^2.0.0",
+    "graphql-tag": "^2.12.6",
     "graphql-ws": "^5.11.2",
     "json": "^11.0.0",
     "jsonwebtoken": "^9.0.0",
