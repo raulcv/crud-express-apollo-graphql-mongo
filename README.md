@@ -13,7 +13,7 @@ Apollo Server was used close to Express for creating the Server with JavaScript
 Further details: https://www.apollographql.com/docs/apollo-server/migration
 
 ```bash
-go run main.go
+npm run start
 ```
 ------------------------------------------------------------------------
 <p align="center">
