@@ -2,7 +2,7 @@
 
 ### 🛠 &nbsp;Languages and Tools :
 
-## JavaScript - ApolloServer - GraphQL - Express - bcryptjs - Moongose - JsonWebToken
+#### JavaScript - ApolloServer - GraphQL - Express - bcryptjs - Moongose - JsonWebToken and ...
 Apollo Server was used close to Express for creating the Server with JavaScript
 
 - It's a API with graphQL and ApolloServer, I used other properties from apollo as well.
