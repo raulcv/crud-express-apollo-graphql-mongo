@@ -30,7 +30,7 @@ you need to have installed in your local machine nodejs, mongodb(You can use [![
 npm install
 ```
 
-2. Copy .env.public to .env and update the variables with your own credentials.
+2. Copy `.env.public` to `.env` and update the variables with your own credentials.
 
 ```bash
 cp .env.public .env
