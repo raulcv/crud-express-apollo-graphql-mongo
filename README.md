@@ -30,10 +30,10 @@ you need to have installed in your local machine nodejs, mongodb(You can use [![
 npm install
 ```
 
-2. Copy .env.example to .env and update the variables with your own credentials.
+2. Copy .env.public to .env and update the variables with your own credentials.
 
 ```bash
-cp .env.example .env.local
+cp .env.public .env
 ```
 
 3. Start the server as development mode
